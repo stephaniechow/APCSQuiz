@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">APCSMCQuiz5</string>
+    <string name="text">Score %1$d</string>
+</resources>
