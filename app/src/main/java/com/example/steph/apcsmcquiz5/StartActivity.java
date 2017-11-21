@@ -11,10 +11,9 @@ public class StartActivity extends AppCompatActivity {
 
     Button iterations, objectClass, array, string, logicAndOperations, all;
 
-    public static String topic, username;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
@@ -24,42 +23,33 @@ public class StartActivity extends AppCompatActivity {
         string = findViewById(R.id.string);
         logicAndOperations = findViewById(R.id.logicandop);
         all = findViewById(R.id.all);
+
     }
 
     public void click(View v){
         int id = v.getId();
-
         switch (id){
             case R.id.iterations:
-                topic = "Iterations";
+                MainActivity.topic = "Iterations";
                 break;
             case R.id.objectclass:
-                topic = "Object Class";
+                MainActivity.topic = "Object Class";
                 break;
             case R.id.array:
-                topic = "Array";
+                MainActivity.topic = "Array";
                 break;
             case R.id.string:
-                topic = "Strings";
+                MainActivity.topic = "Strings";
                 break;
             case R.id.logicandop:
-                topic = "Logic and Operations";
+                MainActivity.topic = "Logic and Operations";
                 break;
             case R.id.all:
-                topic = null;
+                MainActivity.topic = "all";
                 break;
         }
 
-        EditText e = findViewById(R.id.userName);
-        username = e.getText().toString();
-
-        if(Data.db == null){
-            Intent i = new Intent(this, Data.class);
-            startActivity(i);
-        }
-        else{
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
-        }
+        Intent i = new Intent(this, Data.class);
+        startActivity(i);
     }
 }

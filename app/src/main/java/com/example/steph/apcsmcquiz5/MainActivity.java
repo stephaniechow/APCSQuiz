@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Question> questions, specificQuestions;
+    private List<Question> specificQuestions;
     private AppDatabase db;
     private Question q;
     public static String topic;
@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         qText = (TextView)findViewById(R.id.questionText);
 
-        //This should give back which button is being clicked
         for(int i = 0; i<choices.length; i++) {
             choices[i].setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -52,14 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
         db = Data.db;
 
-        if(topic==null||!topic.equals("review")){
-           topic = StartActivity.topic;
-        }
-
         Runnable r2 = new Runnable() {
             @Override
             public void run() {
-                if(topic==null){
+                if(topic.equals("all")){
                     specificQuestions = db.questionDao().getAll();
                 }
                 else if(topic.equals("review")){
@@ -68,10 +63,14 @@ public class MainActivity extends AppCompatActivity {
                 else{
                     specificQuestions = db.questionDao().getQuestions(topic);
                 }
-                newQuestion();
+                if(specificQuestions.size()>0){
+                    newQuestion();
+                }
+                else{
+                    qText.setText("You don't need a review!  You have already completed all the questions correctly.");
+                }
             }
         };
-
 
         Thread getQuestions = new Thread(r2);
         getQuestions.start();
@@ -113,28 +112,33 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (choiceId.equals(q.getAnswer())){
-            q.setReview("false");
+            updateReview(q.getQuestionID(), "false");
             score++;
+        }
+        else{
+            updateReview(q.getQuestionID(), "true");
         }
 
         if(specificQuestions.size()>0){
             newQuestion();
         }
+
         else{
-            final User u = new User(StartActivity.username, score);
-            Runnable r = new Runnable(){
-                @Override
-                public void run(){
-                    Data.dbUser.questionDao().insertUser(u);
-                }
-            };
-
-            Thread t = new Thread(r);
-            t.start();
-
             Intent intent = new Intent(this, EndPage.class);
             startActivity(intent);
         }
+    }
+
+    public void updateReview(final int id, final String s){
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                db.questionDao().updateR(id, s);
+            }
+        };
+
+        Thread t = new Thread(r);
+        t.start();
     }
 
 }

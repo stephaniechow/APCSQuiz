@@ -27,14 +27,10 @@ public interface QuestionDao{
     @Query("SELECT * FROM questions WHERE review LIKE 'true'")
     List<Question> getReview();
 
+    @Query("UPDATE questions SET review = :s WHERE questionID = :i")
+    void updateR(int i, String s);
+
     @Insert
     void insertAll(List<Question> qs);
-
-    @Query("SELECT MAX(score) FROM users")
-    int getMax();
-
-    @Insert
-    void insertUser(User u);
-
 
 }

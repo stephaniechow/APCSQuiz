@@ -1,5 +1,6 @@
 package com.example.steph.apcsmcquiz5;
 
+import android.app.ActivityManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -10,25 +11,13 @@ import android.widget.TextView;
 public class EndPage extends AppCompatActivity {
 
     TextView t;
-    int highScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_page);
-
         t = (TextView) findViewById(R.id.textView);
-
-        Runnable r = new Runnable(){
-            @Override
-            public void run(){
-                highScore = Data.dbUser.questionDao().getMax();
-            }
-        };
-
-
-        String s = getString(R.string.text, MainActivity.score, highScore);
-        t.setText(s);
+        t.setText(getString(R.string.text, MainActivity.score));
     }
 
     public void restartQuiz(View view) {
@@ -40,6 +29,7 @@ public class EndPage extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         startActivity(intent);
+        ((ActivityManager)getApplicationContext().getSystemService(ACTIVITY_SERVICE)).clearApplicationUserData();
     }
 
     public void review(View v) {

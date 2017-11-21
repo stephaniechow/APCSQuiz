@@ -1,5 +1,6 @@
 package com.example.steph.apcsmcquiz5;
 
+import android.app.ActivityManager;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 
 public class Data extends AppCompatActivity {
 
-    public static AppDatabase db, dbUser;
+    public static AppDatabase db;
     private ArrayList<Question> questions;
 
     @Override
@@ -18,8 +19,6 @@ public class Data extends AppCompatActivity {
         setContentView(R.layout.activity_data);
 
         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "questions").build();
-        dbUser = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "user").build();
-
 
         questions = new ArrayList<Question>();
 
