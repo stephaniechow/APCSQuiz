@@ -10,6 +10,7 @@ import android.widget.TextView;
 public class EndPage extends AppCompatActivity {
 
     TextView t;
+    int highScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,15 @@ public class EndPage extends AppCompatActivity {
 
         t = (TextView) findViewById(R.id.textView);
 
-        String s = getString(R.string.text, MainActivity.score);
+        Runnable r = new Runnable(){
+            @Override
+            public void run(){
+                highScore = Data.dbUser.questionDao().getMax();
+            }
+        };
+
+
+        String s = getString(R.string.text, MainActivity.score, highScore);
         t.setText(s);
     }
 
@@ -31,5 +40,11 @@ public class EndPage extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
         startActivity(intent);
+    }
+
+    public void review(View v) {
+        MainActivity.topic = "review";
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
     }
 }

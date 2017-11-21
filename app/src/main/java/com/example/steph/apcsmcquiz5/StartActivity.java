@@ -5,12 +5,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class StartActivity extends AppCompatActivity {
 
     Button iterations, objectClass, array, string, logicAndOperations, all;
 
-    public static String topic;
+    public static String topic, username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,16 @@ public class StartActivity extends AppCompatActivity {
                 break;
         }
 
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
+        EditText e = findViewById(R.id.userName);
+        username = e.getText().toString();
+
+        if(Data.db == null){
+            Intent i = new Intent(this, Data.class);
+            startActivity(i);
+        }
+        else{
+            Intent i = new Intent(this, MainActivity.class);
+            startActivity(i);
+        }
     }
 }

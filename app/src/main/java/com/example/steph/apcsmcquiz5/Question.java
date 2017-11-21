@@ -38,6 +38,9 @@ public class Question {
     @ColumnInfo (name = "topic")
     private String topic;
 
+    @ColumnInfo (name = "review")
+    private String review;
+
     public Question(int id, String q, String a, String a1, String a2, String a3, String a4, String a5, String t){
         questionID = id;
         question = q;
@@ -48,6 +51,7 @@ public class Question {
         choice4 = a4;
         choice5 = a5;
         topic = t;
+        review = "false";
     }
 
     public Question(){}
@@ -123,4 +127,8 @@ public class Question {
     public void setTopic(String q){
         topic = q;
     }
+
+    public String getReview() {return  review;}
+
+    public void setReview(String b) { review = b; }
 }

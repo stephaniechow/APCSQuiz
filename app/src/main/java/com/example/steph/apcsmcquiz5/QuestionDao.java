@@ -8,6 +8,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.example.steph.apcsmcquiz5.Question;
 
@@ -23,11 +24,17 @@ public interface QuestionDao{
     @Query("SELECT * FROM questions WHERE topic LIKE :name")
     List<Question> getQuestions(String name);
 
+    @Query("SELECT * FROM questions WHERE review LIKE 'true'")
+    List<Question> getReview();
+
     @Insert
     void insertAll(List<Question> qs);
 
-    @Delete
-    void delete(Question q);
+    @Query("SELECT MAX(score) FROM users")
+    int getMax();
+
+    @Insert
+    void insertUser(User u);
 
 
 }
