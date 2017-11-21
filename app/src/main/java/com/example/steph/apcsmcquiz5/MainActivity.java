@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Question> questions, specificQuestions;
     private AppDatabase db;
     private Question q;
-    private String topic;
+    public static String topic;
     private TextView qText;
     private RadioButton a, b, c, d, e;
     private RadioButton[] choices;
@@ -192,14 +192,21 @@ public class MainActivity extends AppCompatActivity {
         Thread addQuestions = new Thread(r1);
         addQuestions.start();
 
-        topic = StartActivity.topic;
+        if(!topic.equals("review")){
+            topic = StartActivity.topic;
+        }
         questionsCompleted = 0;
 
         Runnable r2 = new Runnable() {
             @Override
             public void run() {
                 if(topic!=null){
-                    specificQuestions = db.questionDao().getQuestions(topic);
+                    if(!topic.equals("review")){
+                        specificQuestions = db.questionDao().getQuestions(topic);
+                    }
+                    else{
+                        specificQuestions = db.questionDao().getReview();
+                    }
                 }
                 else{
                     specificQuestions = db.questionDao().getAll();
@@ -247,6 +254,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if (choiceId.equals(q.getAnswer())){
             score++;
+        }
+        else{
+            q.setReview(true);
         }
         if(questionsCompleted<specificQuestions.size()){
             newQuestion();

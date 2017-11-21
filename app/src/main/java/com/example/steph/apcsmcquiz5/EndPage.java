@@ -27,6 +27,12 @@ public class EndPage extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void reviewQuiz(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        MainActivity.topic = "review";
+        startActivity(intent);
+    }
+
     public void exitQuiz(View view) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
