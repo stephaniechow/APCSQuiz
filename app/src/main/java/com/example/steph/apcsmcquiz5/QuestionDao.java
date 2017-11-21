@@ -21,9 +21,6 @@ public interface QuestionDao{
     @Query("SELECT * FROM questions")
     List<Question> getAll();
 
-    @Query("SELECT*FROM questions WHERE review = true")
-    List<Question> getReview();
-
     @Query("SELECT * FROM questions WHERE topic LIKE :name")
     List<Question> getQuestions(String name);
 
